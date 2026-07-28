@@ -1,3 +1,4 @@
+```markdown
 <div align="center">
 
 # 🎬 F4A Flex™ Player
@@ -105,9 +106,11 @@ The demo showcases:
     allow="autoplay; fullscreen; picture-in-picture"
     allowfullscreen
 ></iframe>
+```
 
-Option 2: Direct Script
-html
+### Option 2: Direct Script
+
+```html
 <!-- Load the player -->
 <script src="https://ganulak123.github.io/Flex-Player/playertest.js"></script>
 
@@ -128,13 +131,21 @@ html
         }).play();
     }, 1000);
 </script>
-Option 3: Download & Host Yourself
-bash
+```
+
+### Option 3: Download & Host Yourself
+
+```bash
 git clone https://github.com/ganulak123/Flex-Player.git
 cd Flex-Player
 # Open playertest.html in browser or deploy to your server
-🎯 Basic Usage
-javascript
+```
+
+---
+
+## 🎯 Basic Usage
+
+```javascript
 // Get player instance
 var player = window.FlexPlayer;
 
@@ -201,109 +212,162 @@ var state = player.getState();
 console.log('Playing:', state.playing);
 console.log('Current time:', state.currentTime);
 console.log('Duration:', state.duration);
-📡 API Reference
-Core Methods
-Method	Description	Parameters	Returns
-load(data)	Load a video with metadata	Object	FlexPlayer
-queue(data)	Add video to queue	Object	FlexPlayer
-play()	Start playing	-	FlexPlayer
-pause()	Pause video	-	FlexPlayer
-togglePlay()	Toggle play/pause	-	FlexPlayer
-seek(seconds)	Jump to specific time	Number	FlexPlayer
-setVolume(level)	Set volume (0-1)	Number	FlexPlayer
-toggleMute()	Mute/unmute	-	FlexPlayer
-setLoop(boolean)	Enable/disable loop	Boolean	FlexPlayer
-toggleLoop()	Toggle loop	-	FlexPlayer
-setSpeed(speed)	Set playback speed	Number	FlexPlayer
-toggleFullscreen()	Enter/exit fullscreen	-	FlexPlayer
-skipForward()	Skip forward (smart)	-	FlexPlayer
-skipBackward()	Skip backward (smart)	-	FlexPlayer
-destroy()	Clean up player	-	FlexPlayer
-load(data) Parameters
-Field	Type	Required	Description
-title	String	✅	Video title
-src	String	✅	Video URL
-type	String	❌	'Movie', 'TV Show', 'Anime'
-duration	Number	❌	Duration in seconds
-year	Number/String	❌	Release year
-season	Number	❌	Season number
-episode	Number	❌	Episode number
-totalEpisodes	Number	❌	Total episodes
-poster	String	❌	Poster image URL
-lastEpisode	String	❌	Last episode info
-nextEpisode	String	❌	Next episode info
-queue(data) Parameters
-Field	Type	Required	Description
-title	String	✅	Video title
-src	String	✅	Video URL
-type	String	❌	'Movie', 'TV Show', 'Anime'
-duration	Number	❌	Duration in seconds
-season	Number	❌	Season number
-episode	Number	❌	Episode number
-poster	String	❌	Poster image URL
-Subtitle Methods
-Method	Description	Parameters	Returns
-setSubtitles(array)	Load custom subtitles	Array	FlexPlayer
-toggleSubtitles()	Toggle subtitles on/off	-	FlexPlayer
-uploadSubtitles(file)	Upload .srt/.vtt file	File	FlexPlayer
-enableSinhala()	Auto-translate to Sinhala	-	FlexPlayer
-setSubtitleStyle(object)	Customize appearance	Object	FlexPlayer
-getSubtitleStatus()	Get subtitle state	-	Object
-setSubtitles(array) Format
-javascript
+```
+
+---
+
+## 📡 API Reference
+
+### Core Methods
+
+| Method | Description | Parameters | Returns |
+|--------|-------------|------------|---------|
+| `load(data)` | Load a video with metadata | `Object` | `FlexPlayer` |
+| `queue(data)` | Add video to queue | `Object` | `FlexPlayer` |
+| `play()` | Start playing | - | `FlexPlayer` |
+| `pause()` | Pause video | - | `FlexPlayer` |
+| `togglePlay()` | Toggle play/pause | - | `FlexPlayer` |
+| `seek(seconds)` | Jump to specific time | `Number` | `FlexPlayer` |
+| `setVolume(level)` | Set volume (0-1) | `Number` | `FlexPlayer` |
+| `toggleMute()` | Mute/unmute | - | `FlexPlayer` |
+| `setLoop(boolean)` | Enable/disable loop | `Boolean` | `FlexPlayer` |
+| `toggleLoop()` | Toggle loop | - | `FlexPlayer` |
+| `setSpeed(speed)` | Set playback speed | `Number` | `FlexPlayer` |
+| `toggleFullscreen()` | Enter/exit fullscreen | - | `FlexPlayer` |
+| `skipForward()` | Skip forward (smart) | - | `FlexPlayer` |
+| `skipBackward()` | Skip backward (smart) | - | `FlexPlayer` |
+| `destroy()` | Clean up player | - | `FlexPlayer` |
+
+#### `load(data)` Parameters
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `String` | ✅ | Video title |
+| `src` | `String` | ✅ | Video URL |
+| `type` | `String` | ❌ | 'Movie', 'TV Show', 'Anime' |
+| `duration` | `Number` | ❌ | Duration in seconds |
+| `year` | `Number/String` | ❌ | Release year |
+| `season` | `Number` | ❌ | Season number |
+| `episode` | `Number` | ❌ | Episode number |
+| `totalEpisodes` | `Number` | ❌ | Total episodes |
+| `poster` | `String` | ❌ | Poster image URL |
+| `lastEpisode` | `String` | ❌ | Last episode info |
+| `nextEpisode` | `String` | ❌ | Next episode info |
+
+#### `queue(data)` Parameters
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `String` | ✅ | Video title |
+| `src` | `String` | ✅ | Video URL |
+| `type` | `String` | ❌ | 'Movie', 'TV Show', 'Anime' |
+| `duration` | `Number` | ❌ | Duration in seconds |
+| `season` | `Number` | ❌ | Season number |
+| `episode` | `Number` | ❌ | Episode number |
+| `poster` | `String` | ❌ | Poster image URL |
+
+---
+
+### Subtitle Methods
+
+| Method | Description | Parameters | Returns |
+|--------|-------------|------------|---------|
+| `setSubtitles(array)` | Load custom subtitles | `Array` | `FlexPlayer` |
+| `toggleSubtitles()` | Toggle subtitles on/off | - | `FlexPlayer` |
+| `uploadSubtitles(file)` | Upload .srt/.vtt file | `File` | `FlexPlayer` |
+| `enableSinhala()` | Auto-translate to Sinhala | - | `FlexPlayer` |
+| `setSubtitleStyle(object)` | Customize appearance | `Object` | `FlexPlayer` |
+| `getSubtitleStatus()` | Get subtitle state | - | `Object` |
+
+#### `setSubtitles(array)` Format
+
+```javascript
 player.setSubtitles([
     {start: 0, end: 5, text: 'Hello world'},
     {start: 5, end: 10, text: 'Welcome to Flex Player'},
     {start: 10, end: 15, text: 'Enjoy the show!'}
 ]);
-setSubtitleStyle(object) Options
-Field	Options	Default
-size	'small', 'medium', 'large', 'xl'	'medium'
-color	Hex color (e.g., '#ffffff')	'#ffffff'
-background	'dark', 'light', 'none'	'dark'
-javascript
+```
+
+#### `setSubtitleStyle(object)` Options
+
+| Field | Options | Default |
+|-------|---------|---------|
+| `size` | 'small', 'medium', 'large', 'xl' | 'medium' |
+| `color` | Hex color (e.g., '#ffffff') | '#ffffff' |
+| `background` | 'dark', 'light', 'none' | 'dark' |
+
+```javascript
 player.setSubtitleStyle({
     size: 'large',
     color: '#ff6b6b',
     background: 'dark'
 });
-Pre-Play Customization Methods
-Method	Description	Example
-setPrePlayTitle(text)	Set title on launch screen	player.setPrePlayTitle('My Movie')
-setPrePlayMeta(text)	Set meta info	player.setPrePlayMeta('Movie • 02:30')
-setPrePlayDetails(text)	Set details line	player.setPrePlayDetails('📅 2024')
-setPrePlayEpisodes(text)	Set episode info	player.setPrePlayEpisodes('📺 Season 1 • Ep 1')
-setPrePlayLast(text)	Set last episode	player.setPrePlayLast('⬅️ Ep 2 (3d ago)')
-setPrePlayNext(text)	Set next episode	player.setPrePlayNext('➡️ Ep 4 (Tomorrow)')
-Server Methods
-Method	Description	Parameters	Returns
-setServers(array)	Configure available servers	Array	FlexPlayer
-connectServer(name)	Switch to server	String	FlexPlayer
-getCurrentServer()	Get active server	-	String
-setServers(array) Format
-javascript
+```
+
+---
+
+### Pre-Play Customization Methods
+
+| Method | Description | Example |
+|--------|-------------|---------|
+| `setPrePlayTitle(text)` | Set title on launch screen | `player.setPrePlayTitle('My Movie')` |
+| `setPrePlayMeta(text)` | Set meta info | `player.setPrePlayMeta('Movie • 02:30')` |
+| `setPrePlayDetails(text)` | Set details line | `player.setPrePlayDetails('📅 2024')` |
+| `setPrePlayEpisodes(text)` | Set episode info | `player.setPrePlayEpisodes('📺 Season 1 • Ep 1')` |
+| `setPrePlayLast(text)` | Set last episode | `player.setPrePlayLast('⬅️ Ep 2 (3d ago)')` |
+| `setPrePlayNext(text)` | Set next episode | `player.setPrePlayNext('➡️ Ep 4 (Tomorrow)')` |
+
+---
+
+### Server Methods
+
+| Method | Description | Parameters | Returns |
+|--------|-------------|------------|---------|
+| `setServers(array)` | Configure available servers | `Array` | `FlexPlayer` |
+| `connectServer(name)` | Switch to server | `String` | `FlexPlayer` |
+| `getCurrentServer()` | Get active server | - | `String` |
+
+#### `setServers(array)` Format
+
+```javascript
 player.setServers([
     {name: 'Server 1', url: 'https://server1.com', active: true},
     {name: 'Server 2', url: 'https://server2.com', active: false},
     {name: 'Server 3', url: 'https://server3.com', active: false}
 ]);
-Queue Methods
-Method	Description	Returns
-clearQueue()	Clear all queued videos	FlexPlayer
-getQueue()	Get queue array	Array
-skipToNext()	Manually play next	FlexPlayer
-getQueueLength()	Get queue size	Number
-Info Methods
-Method	Description	Returns
-getState()	Get current player state	Object
-getVideoInfo()	Get current video metadata	Object
-setTitle(title)	Update displayed title	FlexPlayer
-setMetadata(data)	Update video metadata	FlexPlayer
-isPlaying()	Check if playing	Boolean
-getCurrentTime()	Get current time	Number
-getDuration()	Get duration	Number
-📊 State Object
-javascript
+```
+
+---
+
+### Queue Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `clearQueue()` | Clear all queued videos | `FlexPlayer` |
+| `getQueue()` | Get queue array | `Array` |
+| `skipToNext()` | Manually play next | `FlexPlayer` |
+| `getQueueLength()` | Get queue size | `Number` |
+
+---
+
+### Info Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `getState()` | Get current player state | `Object` |
+| `getVideoInfo()` | Get current video metadata | `Object` |
+| `setTitle(title)` | Update displayed title | `FlexPlayer` |
+| `setMetadata(data)` | Update video metadata | `FlexPlayer` |
+| `isPlaying()` | Check if playing | `Boolean` |
+| `getCurrentTime()` | Get current time | `Number` |
+| `getDuration()` | Get duration | `Number` |
+
+---
+
+## 📊 State Object
+
+```javascript
 {
     playing: true,           // Boolean - Is video playing?
     currentTime: 45.2,      // Number - Current time in seconds
@@ -327,19 +391,29 @@ javascript
         year: 2024
     }
 }
-⌨️ Keyboard Shortcuts
-Key	Action	Description
-Space / K	Play/Pause	Toggle playback
-F	Fullscreen	Enter/exit fullscreen
-M	Mute	Toggle mute
-C	Subtitles	Toggle subtitles
-L	Loop	Toggle video loop
-→	Skip Forward	Skip forward (smart amount)
-←	Skip Backward	Skip backward (smart amount)
-ESC	Close Settings	Close settings dropdown
-🎨 Subtitle File Formats
-SRT Format
-srt
+```
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action | Description |
+|-----|--------|-------------|
+| `Space` / `K` | Play/Pause | Toggle playback |
+| `F` | Fullscreen | Enter/exit fullscreen |
+| `M` | Mute | Toggle mute |
+| `C` | Subtitles | Toggle subtitles |
+| `L` | Loop | Toggle video loop |
+| `→` | Skip Forward | Skip forward (smart amount) |
+| `←` | Skip Backward | Skip backward (smart amount) |
+| `ESC` | Close Settings | Close settings dropdown |
+
+---
+
+## 🎨 Subtitle File Formats
+
+### SRT Format
+```srt
 1
 00:00:00,000 --> 00:00:05,000
 Hello world!
@@ -351,8 +425,10 @@ Welcome to Flex Player
 3
 00:00:10,000 --> 00:00:15,000
 Enjoy the show!
-VTT Format
-vtt
+```
+
+### VTT Format
+```vtt
 WEBVTT
 
 00:00:00.000 --> 00:00:05.000
@@ -363,9 +439,15 @@ Welcome to Flex Player
 
 00:00:10.000 --> 00:00:15.000
 Enjoy the show!
-🔌 PostMessage API
-Send Commands from Parent Page
-javascript
+```
+
+---
+
+## 🔌 PostMessage API
+
+### Send Commands from Parent Page
+
+```javascript
 // Get iframe reference
 var iframe = document.getElementById('playerIframe');
 
@@ -452,8 +534,11 @@ iframe.contentWindow.postMessage({
     type: 'flexPlayer',
     action: 'destroy'
 }, '*');
-Listen for Events from Player
-javascript
+```
+
+### Listen for Events from Player
+
+```javascript
 window.addEventListener('message', function(e) {
     if(e.data && e.data.type === 'flexPlayer') {
         switch(e.data.event) {
@@ -490,26 +575,41 @@ window.addEventListener('message', function(e) {
         }
     }
 });
-📱 Mobile Support
-Feature	Description
-Touch Play/Pause	Tap right half of video → toggle play/pause
-Touch Skip Back	Tap left half of video → skip backward
-Swipe Gestures	Swipe left/right for seek
-Responsive Controls	Controls auto-adjust for mobile screens
-Auto-Hide Controls	Controls hide after 3 seconds of inactivity
-Touch Progress Bar	Drag progress bar with touch
-🛠️ Browser Support
-Browser	Minimum Version	Status
-Chrome	60+	✅ Fully Supported
-Firefox	55+	✅ Fully Supported
-Safari	12+	✅ Fully Supported
-Edge	79+	✅ Fully Supported
-Opera	47+	✅ Fully Supported
-Mobile Chrome	60+	✅ Fully Supported
-Mobile Safari	12+	✅ Fully Supported
-Samsung Internet	6.2+	✅ Supported
-📁 Project Structure
-text
+```
+
+---
+
+## 📱 Mobile Support
+
+| Feature | Description |
+|---------|-------------|
+| **Touch Play/Pause** | Tap right half of video → toggle play/pause |
+| **Touch Skip Back** | Tap left half of video → skip backward |
+| **Swipe Gestures** | Swipe left/right for seek |
+| **Responsive Controls** | Controls auto-adjust for mobile screens |
+| **Auto-Hide Controls** | Controls hide after 3 seconds of inactivity |
+| **Touch Progress Bar** | Drag progress bar with touch |
+
+---
+
+## 🛠️ Browser Support
+
+| Browser | Minimum Version | Status |
+|---------|-----------------|--------|
+| Chrome | 60+ | ✅ Fully Supported |
+| Firefox | 55+ | ✅ Fully Supported |
+| Safari | 12+ | ✅ Fully Supported |
+| Edge | 79+ | ✅ Fully Supported |
+| Opera | 47+ | ✅ Fully Supported |
+| Mobile Chrome | 60+ | ✅ Fully Supported |
+| Mobile Safari | 12+ | ✅ Fully Supported |
+| Samsung Internet | 6.2+ | ✅ Supported |
+
+---
+
+## 📁 Project Structure
+
+```
 Flex-Player/
 ├── playertest.html      # Main player page
 ├── playertest.css       # All styles (glass UI + animations)
@@ -517,99 +617,122 @@ Flex-Player/
 ├── LICENSE.txt          # MIT License
 ├── README.md            # This documentation
 └── .gitignore           # Git ignore file
-🚀 Deployment
-GitHub Pages (Free)
-Create repository on GitHub
+```
 
-bash
-git init
-git add .
-git commit -m "Initial commit: F4A Flex Player v1.0.0"
-git remote add origin https://github.com/ganulak123/Flex-Player.git
-git push -u origin main
-Enable GitHub Pages
+---
 
-Go to Settings → Pages
+## 🚀 Deployment
 
-Select main branch
+### GitHub Pages (Free)
 
-Save
+1. **Create repository on GitHub**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit: F4A Flex Player v1.0.0"
+   git remote add origin https://github.com/ganulak123/Flex-Player.git
+   git push -u origin main
+   ```
 
-Access your player
+2. **Enable GitHub Pages**
+   - Go to Settings → Pages
+   - Select `main` branch
+   - Save
 
-text
-https://ganulak123.github.io/Flex-Player/playertest.html
-📄 License & Ownership
-This project is licensed under the MIT License - see the LICENSE.txt file for details.
+3. **Access your player**
+   ```
+   https://ganulak123.github.io/Flex-Player/playertest.html
+   ```
 
-What You Can Do ✅
-Action	Allowed
-✅ Use commercially	Yes
-✅ Modify the code	Yes
-✅ Distribute copies	Yes
-✅ Private use	Yes
-✅ Sublicense	Yes
-✅ Credit required	Yes
-What You Cannot Do ❌
-Action	Not Allowed
-❌ Remove copyright notice	No
-❌ Claim as your own	No
-❌ Hold liable	No
-Brand Notice
-F4A Flex™ is a trademark of Ganula. The name "F4A" stands for "Free For All" - reflecting the open-source nature of this project. The "Flex" name represents the flexible, powerful, and stylish nature of the player.
+---
 
-🙏 Credits
-Built With: Vanilla JavaScript, HTML5, CSS3
+## 📄 License & Ownership
 
-UI Inspiration: Modern glassmorphism design trends
+This project is licensed under the **MIT License** - see the [LICENSE.txt](LICENSE.txt) file for details.
 
-Video Playback: HTML5 Video API
+### What You Can Do ✅
 
-Icons: Custom SVG icons
+| Action | Allowed |
+|--------|---------|
+| ✅ Use commercially | Yes |
+| ✅ Modify the code | Yes |
+| ✅ Distribute copies | Yes |
+| ✅ Private use | Yes |
+| ✅ Sublicense | Yes |
+| ✅ Credit required | Yes |
 
-Brand: F4A Flex™ - Free For All
+### What You Cannot Do ❌
 
-🤝 Contributing
-Fork the repository
+| Action | Not Allowed |
+|--------|-------------|
+| ❌ Remove copyright notice | No |
+| ❌ Claim as your own | No |
+| ❌ Hold liable | No |
 
-Create a feature branch (git checkout -b feature/amazing-feature)
+### Brand Notice
 
-Make your changes
+**F4A Flex™** is a trademark of Ganula. The name "F4A" stands for **"Free For All"** - reflecting the open-source nature of this project. The "Flex" name represents the flexible, powerful, and stylish nature of the player.
 
-Commit (git commit -m 'Add amazing feature')
+---
 
-Push (git push origin feature/amazing-feature)
+## 🙏 Credits
 
-Open a Pull Request
+- **Built With:** Vanilla JavaScript, HTML5, CSS3
+- **UI Inspiration:** Modern glassmorphism design trends
+- **Video Playback:** HTML5 Video API
+- **Icons:** Custom SVG icons
+- **Brand:** F4A Flex™ - Free For All
 
-Guidelines
-Keep code clean and readable
+---
 
-Follow existing code style
+## 🤝 Contributing
 
-Update documentation if needed
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit (`git commit -m 'Add amazing feature'`)
+5. Push (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
 
-Test your changes
+### Guidelines
+- Keep code clean and readable
+- Follow existing code style
+- Update documentation if needed
+- Test your changes
 
-⭐ Support
+---
+
+## ⭐ Support
+
 If you like this project, please give it a ⭐ on GitHub!
 
-https://img.shields.io/badge/%E2%AD%90_Star_on_GitHub-View_Repo-blue?style=for-the-badge&logo=github
+[![Star on GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-View_Repo-blue?style=for-the-badge&logo=github)](https://github.com/ganulak123/Flex-Player)
 
-📞 Contact
-🐛 Issues: GitHub Issues
+---
 
-💬 Discussions: GitHub Discussions
+## 📞 Contact
+
+- 🐛 **Issues:** [GitHub Issues](https://github.com/ganulak123/Flex-Player/issues)
+- 💬 **Discussions:** [GitHub Discussions](https://github.com/ganulak123/Flex-Player/discussions)
+
+---
 
 <div align="center">
-Built with ❤️ by Ganula
-F4A Flex™ Player v1.0.0 • © 2026 Ganula
 
-F4A = Free For All
+---
 
-📝 This project is open source and free to use.
-Made for the community, by the community.
+### Built with ❤️ by Ganula
 
-⬆ Back to Top
+**F4A Flex™ Player v1.0.0** • © 2026 Ganula
 
-</div> ```
+**F4A = Free For All**
+
+---
+
+**📝 This project is open source and free to use.**
+**Made for the community, by the community.**
+
+[⬆ Back to Top](#-f4a-flex-player)
+
+</div>
+```
