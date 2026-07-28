@@ -89,15 +89,12 @@ html,body{width:100%;height:100%;background:#0a0a0a;font-family:'Inter',sans-ser
 .ctrl-btn:active{transform:scale(.92)}
 .ctrl-btn svg{width:16px;height:16px;display:block}
 
-/*==================== LOOP BUTTON ====================*/
 .loop-btn.active svg path{stroke:#e50914}
 .loop-btn.active{color:#e50914}
 
-/*==================== CC BUTTON ====================*/
 #ccBtn.active svg rect{stroke:#e50914}
 #ccBtn.active svg text{fill:#e50914}
 
-/*==================== VOLUME ====================*/
 .volume-group{display:flex;align-items:center;gap:0}
 .volume-wrapper{display:flex;align-items:center;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1);max-width:0;opacity:0}
 .volume-wrapper.open{max-width:52px;opacity:1;margin-left:2px}
@@ -133,10 +130,21 @@ html,body{width:100%;height:100%;background:#0a0a0a;font-family:'Inter',sans-ser
 .settings-option:hover{border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.5)}
 .settings-option.active{border-color:#e50914;color:#e50914;background:rgba(229,9,14,.05)}
 
+.color-options{display:flex;gap:4px;flex-wrap:wrap}
+.color-btn{width:20px!important;height:20px!important;border-radius:50%!important;padding:0!important;border:2px solid rgba(255,255,255,.04)!important;transition:all .2s ease!important;min-width:unset!important}
+.color-btn:hover{transform:scale(1.08);border-color:rgba(255,255,255,.1)!important}
+.color-btn.active{border-color:#e50914!important;box-shadow:0 0 12px rgba(229,9,14,.1);transform:scale(1.06)}
+
 /*==================== SUBTITLES ====================*/
 .subtitle-overlay{position:absolute;bottom:20%;left:5%;right:5%;z-index:7;text-align:center;pointer-events:none}
 .subtitle-overlay.hidden{display:none!important}
 .subtitle-text{display:inline-block;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font-size:.95rem;font-weight:600;padding:6px 16px;border-radius:6px;text-shadow:0 2px 6px rgba(0,0,0,.8);max-width:90%;border:1px solid rgba(255,255,255,.03)}
+.subtitle-text.small{font-size:.75rem;padding:4px 10px}
+.subtitle-text.medium{font-size:.95rem;padding:6px 16px}
+.subtitle-text.large{font-size:1.2rem;padding:8px 20px}
+.subtitle-text.xl{font-size:1.4rem;padding:10px 24px}
+.subtitle-text.bg-light{background:rgba(255,255,255,.85);color:#000}
+.subtitle-text.bg-none{background:none;backdrop-filter:none;box-shadow:none;border:none;text-shadow:0 2px 10px rgba(0,0,0,.9)}
 
 /*==================== RESPONSIVE ====================*/
 @media(max-width:768px){
