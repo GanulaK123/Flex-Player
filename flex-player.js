@@ -53,6 +53,25 @@
         @keyframes f4a-spin{to{transform:rotate(360deg)}}
         .f4a-load-text{margin-top:12px;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.1)}
         .f4a-glow{position:absolute;inset:-40px;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 80%,rgba(229,9,14,.08),transparent 60%);filter:blur(60px)}
+        .f4a-settings{position:absolute;bottom:65px;right:16px;z-index:30;background:rgba(10,10,10,.94);backdrop-filter:blur(30px) saturate(1.3);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:14px 16px;min-width:160px;max-width:200px;box-shadow:0 20px 60px rgba(0,0,0,.9);transform-origin:bottom right;transition:all .3s cubic-bezier(.34,1.56,.64,1);opacity:0;transform:scale(.92) translateY(8px);pointer-events:none}
+        .f4a-settings.open{opacity:1;transform:scale(1) translateY(0);pointer-events:auto}
+        .f4a-set-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:8px}
+        .f4a-set-title{font-size:11px;font-weight:700;color:#fff}
+        .f4a-set-close{background:none;border:none;color:rgba(255,255,255,.2);font-size:14px;cursor:pointer}
+        .f4a-set-close:hover{color:#fff}
+        .f4a-set-tabs{display:flex;gap:4px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.04);padding-bottom:8px}
+        .f4a-set-tab{background:none;border:none;padding:3px 8px;font-size:9px;font-weight:600;color:rgba(255,255,255,.25);cursor:pointer;border-radius:4px}
+        .f4a-set-tab:hover{color:rgba(255,255,255,.5)}
+        .f4a-set-tab.active{color:#e50914;background:rgba(229,9,14,.06)}
+        .f4a-set-content{display:block}
+        .f4a-set-content.hidden{display:none!important}
+        .f4a-set-section{margin-bottom:8px}
+        .f4a-set-label{font-size:8px;font-weight:700;color:rgba(255,255,255,.15);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+        .f4a-set-options{display:flex;flex-wrap:wrap;gap:3px}
+        .f4a-set-opt{background:none;border:1px solid rgba(255,255,255,.05);border-radius:3px;padding:2px 7px;font-size:9px;font-weight:500;color:rgba(255,255,255,.25);cursor:pointer}
+        .f4a-set-opt:hover{border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.5)}
+        .f4a-set-opt.active{border-color:#e50914;color:#e50914;background:rgba(229,9,14,.05)}
+        .f4a-set-empty{font-size:10px;color:rgba(255,255,255,.25);font-style:italic}
         @media(max-width:768px){.f4a-pre-glass{padding:24px 28px;max-width:340px}.f4a-pre-title{font-size:18px}.f4a-glass{padding:8px 12px 6px}.f4a-btn{width:26px;height:26px}.f4a-btn svg{width:14px;height:14px}.f4a-time{font-size:9px;min-width:55px}.f4a-pause-glass{padding:18px 24px;gap:14px}.f4a-pause-btn{width:54px;height:54px}.f4a-pause-nav{width:38px;height:38px}}
         @media(max-width:480px){.f4a-pre-glass{padding:18px 20px;max-width:280px}.f4a-pre-title{font-size:15px}.f4a-glass{padding:6px 8px 4px}.f4a-btn{width:22px;height:22px;padding:2px}.f4a-btn svg{width:12px;height:12px}.f4a-time{font-size:8px;min-width:48px}.f4a-pause-glass{padding:14px 16px;gap:10px}.f4a-pause-btn{width:46px;height:46px}.f4a-pause-nav{width:32px;height:32px}}
     `;
@@ -98,6 +117,46 @@
                     </div>
                     <div class="f4a-right">
                         <button class="f4a-btn" id="f4a-fs"><svg viewBox="0 0 24 24" width="16" height="16"><polygon points="3,3 8,3 8,5 5,5 5,8 3,8" fill="white"/><polygon points="21,3 16,3 16,5 19,5 19,8 21,8" fill="white"/><polygon points="3,21 8,21 8,19 5,19 5,16 3,16" fill="white"/><polygon points="21,21 16,21 16,19 19,19 19,16 21,16" fill="white"/></svg></button>
+                        <button class="f4a-btn" id="f4a-settingsbtn"><svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="3" fill="white"/><path d="M12 1L12 4M12 20L12 23M4 12L1 12M23 12L20 12M6 6L4 4M18 18L20 20M18 6L20 4M6 18L4 20" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="f4a-settings" id="f4a-settings">
+                <div class="f4a-set-header">
+                    <span class="f4a-set-title">⚙️ Settings</span>
+                    <button class="f4a-set-close" id="f4a-set-close">✕</button>
+                </div>
+                <div class="f4a-set-tabs">
+                    <button class="f4a-set-tab active" data-tab="video">Video</button>
+                    <button class="f4a-set-tab" data-tab="subs">Subtitles</button>
+                    <button class="f4a-set-tab" data-tab="servers">Servers</button>
+                </div>
+                <div class="f4a-set-content" id="f4a-tab-video">
+                    <div class="f4a-set-section">
+                        <div class="f4a-set-label">Speed</div>
+                        <div class="f4a-set-options" id="f4a-speed-opts">
+                            <button class="f4a-set-opt" data-value="0.5">0.5x</button>
+                            <button class="f4a-set-opt active" data-value="1">1x</button>
+                            <button class="f4a-set-opt" data-value="1.5">1.5x</button>
+                            <button class="f4a-set-opt" data-value="2">2x</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="f4a-set-content hidden" id="f4a-tab-subs">
+                    <div class="f4a-set-section">
+                        <div class="f4a-set-label">Subtitles</div>
+                        <div class="f4a-set-options" id="f4a-cc-opts">
+                            <button class="f4a-set-opt active" data-value="off">Off</button>
+                            <button class="f4a-set-opt" data-value="on">On</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="f4a-set-content hidden" id="f4a-tab-servers">
+                    <div class="f4a-set-section">
+                        <div class="f4a-set-label">Stream Server</div>
+                        <div class="f4a-set-options" id="f4a-server-opts">
+                            <span class="f4a-set-empty" id="f4a-server-empty">0 servers added</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,6 +199,15 @@
         var volSlider = document.getElementById('f4a-volslider');
         var volWrap = document.getElementById('f4a-volwrap');
         var fsBtn = document.getElementById('f4a-fs');
+        var setBtn = document.getElementById('f4a-settingsbtn');
+        var setPanel = document.getElementById('f4a-settings');
+        var setClose = document.getElementById('f4a-set-close');
+        var setTabs = document.querySelectorAll('.f4a-set-tab');
+        var speedOpts = document.querySelectorAll('#f4a-speed-opts .f4a-set-opt');
+        var ccOpts = document.querySelectorAll('#f4a-cc-opts .f4a-set-opt');
+        var serverOptsWrap = document.getElementById('f4a-server-opts');
+        var serverList = [];
+        var currentServer = null;
         var pauseOverlay = document.getElementById('f4a-pause');
         var pauseBtn = document.getElementById('f4a-pausebtn');
         var prevBtn = document.getElementById('f4a-prev');
@@ -325,6 +393,62 @@
             updateVolIcon(); });
         fsBtn.addEventListener('click', toggleFS);
 
+        // ===== SETTINGS =====
+        setBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            setPanel.classList.toggle('open');
+        });
+        setClose.addEventListener('click', function() {
+            setPanel.classList.remove('open');
+        });
+        document.addEventListener('click', function(e) {
+            if (setPanel.classList.contains('open') && !setPanel.contains(e.target) && e.target !== setBtn) {
+                setPanel.classList.remove('open');
+            }
+        });
+        setTabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                setTabs.forEach(function(t) { t.classList.remove('active'); });
+                tab.classList.add('active');
+                document.querySelectorAll('.f4a-set-content').forEach(function(c) { c.classList.add('hidden'); });
+                document.getElementById('f4a-tab-' + tab.dataset.tab).classList.remove('hidden');
+            });
+        });
+        speedOpts.forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                speedOpts.forEach(function(o) { o.classList.remove('active'); });
+                opt.classList.add('active');
+                v.playbackRate = parseFloat(opt.dataset.value);
+            });
+        });
+        ccOpts.forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                ccOpts.forEach(function(o) { o.classList.remove('active'); });
+                opt.classList.add('active');
+                toggleCC(opt.dataset.value === 'on');
+            });
+        });
+
+        function renderServerList() {
+            serverOptsWrap.innerHTML = '';
+            if (serverList.length === 0) {
+                serverOptsWrap.innerHTML = '<span class="f4a-set-empty" id="f4a-server-empty">0 servers added</span>';
+                return;
+            }
+            serverList.forEach(function(s) {
+                var btn = document.createElement('button');
+                btn.className = 'f4a-set-opt' + (s.name === currentServer ? ' active' : '');
+                btn.textContent = s.name;
+                btn.addEventListener('click', function() {
+                    currentServer = s.name;
+                    if (s.url) { v.src = s.url; v.load(); }
+                    renderServerList();
+                });
+                serverOptsWrap.appendChild(btn);
+            });
+        }
+        renderServerList();
+
         // ===== PROGRESS BAR =====
         track.addEventListener('click', seek);
         track.addEventListener('mousedown', startDrag);
@@ -406,6 +530,18 @@
             loop: function() { toggleLoop(); return this; },
             fullscreen: function() { toggleFS(); return this; },
             skip: function(s) { skip(s); return this; },
+            setServers: function(servers) {
+                serverList = servers || [];
+                if (serverList.length > 0 && !currentServer) currentServer = serverList[0].name;
+                renderServerList();
+                return this;
+            },
+            connectServer: function(name) {
+                var s = serverList.filter(function(x) { return x.name === name; })[0];
+                if (s) { currentServer = name; if (s.url) { v.src = s.url; v.load(); } renderServerList(); }
+                return this;
+            },
+            getCurrentServer: function() { return currentServer; },
             state: function() {
                 return { playing: !v.paused, currentTime: v.currentTime, duration: v.duration, volume: v.volume, muted: v.muted,
                     loop: loop };
