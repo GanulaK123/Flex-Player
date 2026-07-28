@@ -57,7 +57,17 @@
 
 ## 🎬 Live Demo
 
+**Experience the player in action:**
+
 **[https://ganulak123.github.io/Flex-Player/playertest.html](https://ganulak123.github.io/Flex-Player/playertest.html)**
+
+The demo showcases:
+- ✅ Glass UI effects with backdrop blur
+- ✅ Subtitle upload and rendering (SRT/VTT)
+- ✅ Queue system with auto-play next video
+- ✅ Server switching with real-time status
+- ✅ All playback controls and keyboard shortcuts
+- ✅ Mobile-responsive touch interface
 
 ---
 
@@ -66,7 +76,7 @@
 | Feature | Description | Status |
 | :--- | :--- | :---: |
 | 🎨 **Glass UI** | Beautiful backdrop-filter blur with responsive glassmorphism controls | ✅ |
-| ⚡ **Custom Speeds** | Adjust playback rates (0.5x, 1x, 1.25x, 1.5x, 2x) | ✅ |
+| ⚡ **Custom Speeds** | Adjust playback rates (0.5x, 1x, 1.5x, 2x) | ✅ |
 | 🔄 **Smart Skip** | Auto-adjusts seek intervals based on total video length | ✅ |
 | 📺 **Queue System** | Auto-plays next episode with last-3-seconds preview popup | ✅ |
 | 🌍 **Multi-Language** | Native English & Sinhala subtitle rendering support | ✅ |
@@ -76,16 +86,19 @@
 | ⌨️ **Keyboard Controls** | Keyboard shortcuts for play/pause, seek, mute, and fullscreen | ✅ |
 | 🔌 **JavaScript API** | Global `window.FlexPlayer` instance for programmatic control | ✅ |
 | 🎯 **PostMessage API** | Remote control support for parent `<iframe>` embedding | ✅ |
+| 🔄 **Loop Function** | Toggle video looping with visual indicator | ✅ |
+| ⏭️ **Next Popup** | Shows next video in last 3 seconds with progress bar | ✅ |
+| 📝 **Sinhala Subs** | Auto-translate to Sinhala with Google Translate integration | ✅ |
 
 ---
 
 ## 🚀 Quick Start
 
-### Option 1: Iframe Embed
+### Option 1: Iframe Embed (Recommended)
 
 ```html
 <iframe 
-    src="[https://ganulak123.github.io/Flex-Player/playertest.html](https://ganulak123.github.io/Flex-Player/playertest.html)"
+    src="https://ganulak123.github.io/Flex-Player/playertest.html"
     width="100%"
     height="500px"
     frameborder="0"
