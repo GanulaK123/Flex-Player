@@ -378,12 +378,12 @@
         window.F4A = {
             load: function(url, title) {
                 preTitle.textContent = title || 'Video';
-                preMeta.textContent = 'Loading...';
+                preMeta.textContent = 'Click Play to start';
                 v.src = url;
                 v.load();
                 pre.classList.add('hide');
                 setTimeout(function() { pre.style.display = 'none'; }, 500);
-                v.play();
+                // v.play();  // REMOVED - User clicks Play button
                 return this;
             },
             play: function() { v.play(); return this; },
