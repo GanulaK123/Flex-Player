@@ -383,7 +383,7 @@
                 v.load();
                 pre.classList.add('hide');
                 setTimeout(function() { pre.style.display = 'none'; }, 500);
-                // v.play();  // REMOVED - User clicks Play button
+                // v.play();  // REMOVED - User clicks Play
                 return this;
             },
             play: function() { v.play(); return this; },
