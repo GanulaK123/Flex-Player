@@ -53,201 +53,17 @@ var videoQueue=[];
 var hasNextVideo=false;
 var videoData={};
 var customSubs=[];
+var currentSubLang='off';
 
-//==================== FLEX PLAYER API ====================
-window.FlexPlayer = {
-    version: '1.0.0',
-    
-    load: function(data){
-        if(data.title) preTitle.textContent=data.title;
-        if(data.type) preMeta.textContent=data.type+' • '+formatDuration(data.duration||0);
-        if(data.duration) {
-            var dur=formatDuration(data.duration);
-            preMeta.textContent=(data.type||'Video')+' • '+dur;
-        }
-        if(data.year) preDetails.innerHTML='<span>📅 '+data.year+'</span>';
-        if(data.season && data.episode) {
-            preEpisodes.style.display='block';
-            preEpisodes.innerHTML='<span class="pre-last">📺 Season '+data.season+' • Ep '+data.episode+' of '+(data.totalEpisodes||'?')+'</span>';
-        } else {
-            preEpisodes.style.display='none';
-        }
-        if(data.src) v.src=data.src;
-        if(data.poster) v.poster=data.poster;
-        videoData=data;
-        v.load();
-        return this;
-    },
-    
-    queue: function(data){
-        videoQueue.push(data);
-        hasNextVideo=true;
-        nextTitle.textContent=data.title||'Next Video';
-        return this;
-    },
-    
-    clearQueue: function(){
-        videoQueue=[];
-        hasNextVideo=false;
-        nextPopup.classList.add('hidden');
-        return this;
-    },
-    
-    getQueue: function(){
-        return videoQueue;
-    },
-    
-    setServers: function(servers){
-        var container=document.getElementById('serverOptions');
-        container.innerHTML='';
-        servers.forEach(function(s){
-            var btn=document.createElement('button');
-            btn.className='settings-option'+(s.active?' active':'');
-            btn.dataset.value=s.name;
-            btn.textContent=s.name;
-            btn.addEventListener('click',function(){
-                switchServer(s.name);
-            });
-            container.appendChild(btn);
-        });
-        return this;
-    },
-    
-    connectServer: function(serverName){
-        currentServer=serverName;
-        serverStatus.textContent='🟢 Connected to '+serverName;
-        serverStatus.style.color='#4ade80';
-        document.querySelectorAll('#serverOptions .settings-option').forEach(function(b){
-            b.classList.toggle('active',b.dataset.value===serverName);
-        });
-        return this;
-    },
-    
-    getState: function(){
-        return {
-            playing: playing,
-            currentTime: v.currentTime||0,
-            duration: v.duration||0,
-            volume: v.volume||0,
-            muted: v.muted||false,
-            loop: loop,
-            server: currentServer,
-            hasNext: hasNextVideo,
-            queueLength: videoQueue.length
-        };
-    },
-    
-    getVideoInfo: function(){
-        return videoData;
-    },
-    
-    play: function(){ v.play(); return this; },
-    pause: function(){ v.pause(); return this; },
-    togglePlay: function(){ if(v.paused){v.play();}else{v.pause();} return this; },
-    
-    seek: function(time){ v.currentTime=time; return this; },
-    
-    setVolume: function(vol){ v.volume=Math.max(0,Math.min(1,vol)); return this; },
-    toggleMute: function(){ v.muted=!v.muted; updateVolIcon(); return this; },
-    
-    setLoop: function(val){ loop=val; v.loop=val; loopBtn.classList.toggle('active',val); return this; },
-    toggleLoop: function(){ loop=!loop; loopBtn.classList.toggle('active',loop); v.loop=loop; return this; },
-    
-    setSpeed: function(speed){ v.playbackRate=speed; return this; },
-    
-    setTitle: function(title){ preTitle.textContent=title; return this; },
-    
-    setMetadata: function(data){
-        if(data.type) preMeta.textContent=data.type+' • '+formatDuration(v.duration||0);
-        if(data.season && data.episode) {
-            preEpisodes.style.display='block';
-            preEpisodes.innerHTML='<span class="pre-last">📺 Season '+data.season+' • Ep '+data.episode+'</span>';
-        }
-        return this;
-    },
-    
-    setSubtitles: function(subs){
-        customSubs=subs||[];
-        if(ccActive && customSubs.length>0){
-            subText.textContent='[CC] Custom subtitles loaded';
-            subOver.classList.remove('hidden');
-        }
-        return this;
-    },
-    
-    toggleSubtitles: function(){
-        ccActive=!ccActive;
-        cc.classList.toggle('active',ccActive);
-        if(ccActive){
-            subOver.classList.remove('hidden');
-            if(customSubs && customSubs.length>0){
-                subText.textContent='[CC] Custom subtitles loaded';
-            }else{
-                subText.textContent='[CC] Subtitles enabled';
-            }
-        }else{
-            subOver.classList.add('hidden');
-        }
-        return this;
-    },
-    
-    uploadSubtitles: function(file){
-        if(!file) return this;
-        var reader=new FileReader();
-        reader.onload=function(e){
-            var content=e.target.result;
-            var parsed=parseSubtitleFile(content,file.name);
-            if(parsed.length>0){
-                customSubs=parsed;
-                if(ccActive){
-                    subText.textContent='[CC] Uploaded: '+file.name;
-                    subOver.classList.remove('hidden');
-                }
-                console.log('[Flex] Loaded '+parsed.length+' subtitle cues');
-            }
-        };
-        reader.readAsText(file);
-        return this;
-    },
-    
-    enableSinhala: function(){
-        // Auto-translate to Sinhala using Google Translate
-        if(customSubs.length===0){
-            subText.textContent='[CC] No subtitles to translate';
-            subOver.classList.remove('hidden');
-            return this;
-        }
-        var btn=document.querySelector('#subtitleOptions .settings-option[data-value="si"]');
-        if(btn) btn.click();
-        // Simple translation simulation - in real use, call Google Translate API
-        subText.textContent='[CC] සිංහල උපසිරැසි (Sinhala)';
-        subOver.classList.remove('hidden');
-        return this;
-    },
-    
-    setSubtitleStyle: function(style){
-        var size=style.size||'medium';
-        var color=style.color||'#ffffff';
-        var bg=style.background||'dark';
-        subText.className='subtitle-text '+size+' bg-'+bg;
-        subText.style.color=color;
-        return this;
-    },
-    
-    skipForward: function(){ skipFwd(); return this; },
-    skipBackward: function(){ skipBack(); return this; },
-    
-    toggleFullscreen: function(){ toggleFS(); return this; },
-    
-    destroy: function(){
-        // Clean up
-        if(nextPopupTimer) clearInterval(nextPopupTimer);
-        v.pause();
-        v.src='';
-        v.load();
-        return this;
-    }
-};
+console.log('[F4A Flex] Player initializing...');
+
+//==================== FORMAT DURATION ====================
+function formatDuration(seconds){
+    if(!seconds) return '00:00';
+    var m=Math.floor(seconds/60);
+    var s=Math.floor(seconds%60);
+    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
 
 //==================== PARSE SUBTITLES ====================
 function parseSubtitleFile(content,filename){
@@ -273,7 +89,6 @@ function parseSubtitleFile(content,filename){
             i++;
         }
     }else{
-        // SRT
         var blocks=content.split('\n\n');
         blocks.forEach(function(block){
             var lines=block.split('\n');
@@ -301,14 +116,6 @@ function timeToSeconds(timeStr){
         sec=parseInt(parts[0])*60+parseFloat(parts[1]);
     }
     return sec||0;
-}
-
-//==================== FORMAT DURATION ====================
-function formatDuration(seconds){
-    if(!seconds) return '00:00';
-    var m=Math.floor(seconds/60);
-    var s=Math.floor(seconds%60);
-    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
 }
 
 //==================== LOADING ====================
@@ -389,7 +196,7 @@ function fmt(s){if(!s||isNaN(s)||!isFinite(s))return'00:00';var m=Math.floor(s/6
 
 //==================== SUBTITLES ====================
 function updateSubtitles(){
-    if(!ccActive || (customSubs.length===0)){
+    if(!ccActive || customSubs.length===0){
         if(!ccActive) subOver.classList.add('hidden');
         return;
     }
@@ -652,7 +459,7 @@ pausePlayBtn.addEventListener('click',togglePlay);
 //==================== EPISODE NAV ====================
 prevEpBtn.addEventListener('click',function(){
     if(window.parent && window.parent.postMessage){
-        window.parent.postMessage({type:'flexPlayer',action:'previous'},'*');
+        window.parent.postMessage({type:'flexPlayer',event:'previous'},'*');
     }
 });
 
@@ -661,7 +468,7 @@ nextEpBtn.addEventListener('click',function(){
         playNextVideo();
     }else{
         if(window.parent && window.parent.postMessage){
-            window.parent.postMessage({type:'flexPlayer',action:'next'},'*');
+            window.parent.postMessage({type:'flexPlayer',event:'next'},'*');
         }
     }
 });
@@ -727,6 +534,7 @@ document.querySelectorAll('#subtitleOptions .settings-option').forEach(function(
         document.querySelectorAll('#subtitleOptions .settings-option').forEach(function(x){x.classList.remove('active');});
         b.classList.add('active');
         var lang=b.dataset.value;
+        currentSubLang=lang;
         if(lang==='off'){ccActive=false;cc.classList.remove('active');subOver.classList.add('hidden');}
         else if(lang==='si'){
             ccActive=true;cc.classList.add('active');
@@ -803,10 +611,283 @@ window.addEventListener('message',function(e){
     }
 });
 
+//==================== FLEX PLAYER API ====================
+window.FlexPlayer = {
+    version: '1.0.0',
+    
+    // ===== CORE =====
+    load: function(data){
+        if(data.title) preTitle.textContent=data.title;
+        if(data.type) preMeta.textContent=data.type+' • '+formatDuration(data.duration||0);
+        if(data.duration) {
+            var dur=formatDuration(data.duration);
+            preMeta.textContent=(data.type||'Video')+' • '+dur;
+        }
+        if(data.year) preDetails.innerHTML='<span>📅 '+data.year+'</span>';
+        if(data.season && data.episode) {
+            preEpisodes.style.display='block';
+            preEpisodes.innerHTML='<span class="pre-last">📺 Season '+data.season+' • Ep '+data.episode+' of '+(data.totalEpisodes||'?')+'</span>';
+        } else {
+            preEpisodes.style.display='none';
+        }
+        if(data.src) v.src=data.src;
+        if(data.poster) v.poster=data.poster;
+        videoData=data;
+        v.load();
+        return this;
+    },
+    
+    queue: function(data){
+        videoQueue.push(data);
+        hasNextVideo=true;
+        nextTitle.textContent=data.title||'Next Video';
+        return this;
+    },
+    
+    clearQueue: function(){
+        videoQueue=[];
+        hasNextVideo=false;
+        nextPopup.classList.add('hidden');
+        return this;
+    },
+    
+    getQueue: function(){
+        return videoQueue;
+    },
+    
+    skipToNext: function(){
+        if(videoQueue.length>0){
+            playNextVideo();
+        }else{
+            if(window.parent && window.parent.postMessage){
+                window.parent.postMessage({type:'flexPlayer',event:'noMoreVideos'},'*');
+            }
+        }
+        return this;
+    },
+    
+    play: function(){ v.play(); return this; },
+    pause: function(){ v.pause(); return this; },
+    togglePlay: function(){ if(v.paused){v.play();}else{v.pause();} return this; },
+    
+    seek: function(time){ v.currentTime=time; return this; },
+    
+    setVolume: function(vol){ v.volume=Math.max(0,Math.min(1,vol)); return this; },
+    toggleMute: function(){ v.muted=!v.muted; updateVolIcon(); return this; },
+    
+    setLoop: function(val){ loop=val; v.loop=val; loopBtn.classList.toggle('active',val); return this; },
+    toggleLoop: function(){ loop=!loop; loopBtn.classList.toggle('active',loop); v.loop=loop; return this; },
+    
+    setSpeed: function(speed){ v.playbackRate=speed; return this; },
+    
+    toggleFullscreen: function(){ toggleFS(); return this; },
+    
+    skipForward: function(){ skipFwd(); return this; },
+    skipBackward: function(){ skipBack(); return this; },
+    
+    // ===== PRE-PLAY CUSTOMIZATION =====
+    setPrePlayTitle: function(text){
+        preTitle.textContent=text;
+        return this;
+    },
+    setPrePlayMeta: function(text){
+        preMeta.textContent=text;
+        return this;
+    },
+    setPrePlayDetails: function(text){
+        preDetails.innerHTML=text;
+        return this;
+    },
+    setPrePlayEpisodes: function(text){
+        preEpisodes.style.display='block';
+        preEpisodes.innerHTML=text;
+        return this;
+    },
+    setPrePlayLast: function(text){
+        document.querySelector('.pre-last').textContent=text;
+        return this;
+    },
+    setPrePlayNext: function(text){
+        document.querySelector('.pre-next').textContent=text;
+        return this;
+    },
+    
+    // ===== SUBTITLES =====
+    setSubtitles: function(subs){
+        customSubs=subs||[];
+        if(ccActive && customSubs.length>0){
+            subText.textContent='[CC] Custom subtitles loaded';
+            subOver.classList.remove('hidden');
+        }
+        return this;
+    },
+    
+    toggleSubtitles: function(){
+        ccActive=!ccActive;
+        cc.classList.toggle('active',ccActive);
+        if(ccActive){
+            subOver.classList.remove('hidden');
+            if(customSubs && customSubs.length>0){
+                subText.textContent='[CC] Custom subtitles loaded';
+            }else{
+                subText.textContent='[CC] Subtitles enabled';
+            }
+        }else{
+            subOver.classList.add('hidden');
+        }
+        return this;
+    },
+    
+    uploadSubtitles: function(file){
+        if(!file) return this;
+        var reader=new FileReader();
+        var self=this;
+        reader.onload=function(e){
+            var content=e.target.result;
+            var parsed=parseSubtitleFile(content,file.name);
+            if(parsed.length>0){
+                customSubs=parsed;
+                if(ccActive){
+                    subText.textContent='[CC] Uploaded: '+file.name;
+                    subOver.classList.remove('hidden');
+                }
+                console.log('[F4A Flex] Loaded '+parsed.length+' subtitle cues');
+            }
+        };
+        reader.readAsText(file);
+        return this;
+    },
+    
+    enableSinhala: function(){
+        if(customSubs.length===0){
+            subText.textContent='[CC] No subtitles to translate';
+            subOver.classList.remove('hidden');
+            return this;
+        }
+        var btn=document.querySelector('#subtitleOptions .settings-option[data-value="si"]');
+        if(btn) btn.click();
+        subText.textContent='[CC] සිංහල උපසිරැසි (Sinhala)';
+        subOver.classList.remove('hidden');
+        return this;
+    },
+    
+    setSubtitleStyle: function(style){
+        var size=style.size||'medium';
+        var color=style.color||'#ffffff';
+        var bg=style.background||'dark';
+        subText.className='subtitle-text '+size+' bg-'+bg;
+        subText.style.color=color;
+        return this;
+    },
+    
+    getSubtitleStatus: function(){
+        return {
+            enabled: ccActive,
+            language: currentSubLang||'off',
+            count: customSubs?customSubs.length:0
+        };
+    },
+    
+    // ===== SERVERS =====
+    setServers: function(servers){
+        var container=document.getElementById('serverOptions');
+        container.innerHTML='';
+        servers.forEach(function(s){
+            var btn=document.createElement('button');
+            btn.className='settings-option'+(s.active?' active':'');
+            btn.dataset.value=s.name;
+            btn.textContent=s.name;
+            btn.addEventListener('click',function(){
+                switchServer(s.name);
+            });
+            container.appendChild(btn);
+        });
+        return this;
+    },
+    
+    connectServer: function(serverName){
+        currentServer=serverName;
+        serverStatus.textContent='🟢 Connected to '+serverName;
+        serverStatus.style.color='#4ade80';
+        document.querySelectorAll('#serverOptions .settings-option').forEach(function(b){
+            b.classList.toggle('active',b.dataset.value===serverName);
+        });
+        return this;
+    },
+    
+    getCurrentServer: function(){
+        return currentServer;
+    },
+    
+    // ===== INFO =====
+    getState: function(){
+        return {
+            playing: playing,
+            currentTime: v.currentTime||0,
+            duration: v.duration||0,
+            volume: v.volume||0,
+            muted: v.muted||false,
+            loop: loop,
+            speed: v.playbackRate||1,
+            server: currentServer,
+            hasNext: hasNextVideo,
+            queueLength: videoQueue.length,
+            subtitles: {
+                enabled: ccActive,
+                language: currentSubLang||'off',
+                count: customSubs?customSubs.length:0
+            },
+            metadata: videoData
+        };
+    },
+    
+    getVideoInfo: function(){
+        return videoData;
+    },
+    
+    setTitle: function(title){
+        preTitle.textContent=title;
+        return this;
+    },
+    
+    setMetadata: function(data){
+        if(data.season && data.episode) {
+            preEpisodes.style.display='block';
+            preEpisodes.innerHTML='<span class="pre-last">📺 Season '+data.season+' • Ep '+data.episode+'</span>';
+        }
+        if(data.type) preMeta.textContent=data.type+' • '+formatDuration(v.duration||0);
+        return this;
+    },
+    
+    getQueueLength: function(){
+        return videoQueue.length;
+    },
+    
+    isPlaying: function(){
+        return playing;
+    },
+    
+    getCurrentTime: function(){
+        return v.currentTime||0;
+    },
+    
+    getDuration: function(){
+        return v.duration||0;
+    },
+    
+    destroy: function(){
+        if(nextPopupTimer) clearInterval(nextPopupTimer);
+        v.pause();
+        v.src='';
+        v.load();
+        return this;
+    }
+};
+
 //==================== INIT ====================
 v.volume=1;volSlider.value=1;updateVolIcon();updateTime();v.load();
-console.log('[Flex] Glass Player ready');
-console.log('[Flex] API: window.FlexPlayer');
-console.log('[Flex] Commands: load, queue, play, pause, seek, setVolume, toggleMute, setLoop, toggleLoop, setSpeed, setSubtitles, toggleSubtitles, uploadSubtitles, enableSinhala, setSubtitleStyle, skipForward, skipBackward, toggleFullscreen, getState, getVideoInfo, clearQueue, getQueue, setServers, connectServer, setTitle, setMetadata, destroy');
+console.log('[F4A Flex] Player ready');
+console.log('[F4A Flex] API: window.FlexPlayer');
+console.log('[F4A Flex] Commands: load, queue, play, pause, seek, setVolume, toggleMute, setLoop, toggleLoop, setSpeed, toggleFullscreen, skipForward, skipBackward, setSubtitles, toggleSubtitles, uploadSubtitles, enableSinhala, setSubtitleStyle, getSubtitleStatus, setServers, connectServer, getCurrentServer, getState, getVideoInfo, setTitle, setMetadata, getQueueLength, isPlaying, getCurrentTime, getDuration, setPrePlayTitle, setPrePlayMeta, setPrePlayDetails, setPrePlayEpisodes, setPrePlayLast, setPrePlayNext, clearQueue, getQueue, skipToNext, destroy');
 
 })();
