@@ -1,4 +1,3 @@
-```markdown
 <div align="center">
 
 # 🎬 F4A Flex™ Player
@@ -47,6 +46,7 @@
 **F4A Flex™ Player** (*Free-For-All*) is a modern, glass-themed video player engine built with vanilla JavaScript. It features a custom backdrop-filter blur interface, comprehensive subtitle support, intelligent queue system, multi-server stream switching, and a complete JS API for seamless web integration.
 
 **Why F4A Flex Player?**
+
 - 🎨 **Beautiful Glass UI** - Premium translucent visual design with responsive layouts
 - 🚀 **Zero Dependencies** - Pure vanilla JS and standard CSS, lightweight and fast
 - 🔌 **Fully Extensible** - Add custom backend servers, custom playback speeds, and dynamic controls
@@ -60,15 +60,16 @@
 
 **Experience the player in action:**
 
-**[https://ganulak123.github.io/Flex-Player/playertest.html](https://ganulak123.github.io/Flex-Player/playertest.html)**
+[https://ganulak123.github.io/Flex-Player/playertest.html](https://ganulak123.github.io/Flex-Player/playertest.html)
 
 The demo showcases:
-- ✅ Glass UI effects with backdrop blur
-- ✅ Subtitle upload and rendering (SRT/VTT)
-- ✅ Queue system with auto-play next video
-- ✅ Server switching with real-time status
-- ✅ All playback controls and keyboard shortcuts
-- ✅ Mobile-responsive touch interface
+
+- Glass UI effects with backdrop blur
+- Subtitle upload and rendering (SRT/VTT)
+- Queue system with auto-play next video
+- Server switching with real-time status
+- All playback controls and keyboard shortcuts
+- Mobile-responsive touch interface
 
 ---
 
@@ -153,7 +154,7 @@ var player = window.FlexPlayer;
 player.load({
     title: 'Attack on Titan - Episode 1',
     type: 'Anime',
-    duration: 1440, // 24 minutes in seconds
+    duration: 1440,
     year: 2013,
     season: 1,
     episode: 1,
@@ -369,20 +370,20 @@ player.setServers([
 
 ```javascript
 {
-    playing: true,           // Boolean - Is video playing?
-    currentTime: 45.2,      // Number - Current time in seconds
-    duration: 120.0,        // Number - Total duration in seconds
-    volume: 0.8,            // Number - Volume level (0-1)
-    muted: false,           // Boolean - Is muted?
-    loop: false,            // Boolean - Is loop enabled?
-    speed: 1.0,             // Number - Playback speed
-    server: 'Server 1',     // String - Current server name
-    hasNext: true,          // Boolean - Is there a next video?
-    queueLength: 2,         // Number - Number of queued videos
+    playing: true,
+    currentTime: 45.2,
+    duration: 120.0,
+    volume: 0.8,
+    muted: false,
+    loop: false,
+    speed: 1.0,
+    server: 'Server 1',
+    hasNext: true,
+    queueLength: 2,
     subtitles: {
-        enabled: true,      // Boolean - Are subtitles on?
-        language: 'en',     // String - Current language
-        count: 15           // Number - Number of cues
+        enabled: true,
+        language: 'en',
+        count: 15
     },
     metadata: {
         title: 'My Movie',
@@ -413,6 +414,7 @@ player.setServers([
 ## 🎨 Subtitle File Formats
 
 ### SRT Format
+
 ```srt
 1
 00:00:00,000 --> 00:00:05,000
@@ -428,6 +430,7 @@ Enjoy the show!
 ```
 
 ### VTT Format
+
 ```vtt
 WEBVTT
 
@@ -626,23 +629,26 @@ Flex-Player/
 ### GitHub Pages (Free)
 
 1. **Create repository on GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: F4A Flex Player v1.0.0"
-   git remote add origin https://github.com/ganulak123/Flex-Player.git
-   git push -u origin main
-   ```
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: F4A Flex Player v1.0.0"
+git remote add origin https://github.com/ganulak123/Flex-Player.git
+git push -u origin main
+```
 
 2. **Enable GitHub Pages**
-   - Go to Settings → Pages
-   - Select `main` branch
-   - Save
+
+- Go to Settings → Pages
+- Select `main` branch
+- Save
 
 3. **Access your player**
-   ```
-   https://ganulak123.github.io/Flex-Player/playertest.html
-   ```
+
+```
+https://ganulak123.github.io/Flex-Player/playertest.html
+```
 
 ---
 
@@ -695,6 +701,7 @@ This project is licensed under the **MIT License** - see the [LICENSE.txt](LICEN
 6. Open a Pull Request
 
 ### Guidelines
+
 - Keep code clean and readable
 - Follow existing code style
 - Update documentation if needed
@@ -735,4 +742,3 @@ If you like this project, please give it a ⭐ on GitHub!
 [⬆ Back to Top](#-f4a-flex-player)
 
 </div>
-```
