@@ -265,6 +265,16 @@
             setTimeout(function() { load.classList.add('hide'); }, 500);
         });
 
+        v.addEventListener('error', function() {
+            load.classList.add('hidden');
+            setTimeout(function() { load.classList.add('hide'); }, 500);
+            var err = v.error ? v.error.code : 'unknown';
+            console.error('[F4A] Video load failed. MediaError code:', err);
+            preMeta.textContent = 'Failed to load video (see console)';
+            pre.classList.remove('hide');
+            pre.style.display = 'flex';
+        });
+
         v.addEventListener('play', function() { playing = true;
             updatePlayBtn();
             showControls();
