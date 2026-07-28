@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Flex TV - Glass Player</title>
+    <link rel="stylesheet" href="playertest.css" />
+</head>
+<body>
+
+<div id="playerContainer" class="player-container">
+
+    <!-- LOADING -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Connecting...</div>
+    </div>
+
+    <!-- PRE-PLAY INTERFACE -->
+    <div id="prePlayOverlay" class="pre-play-overlay">
+        <div class="pre-play-glass">
+            <div class="pre-play-title" id="preTitle">Big Buck Bunny</div>
+            <div class="pre-play-meta" id="preMeta">Movie • 00:10</div>
+            <div class="pre-play-details" id="preDetails">
+                <span>🎬 Short Film</span>
+                <span>•</span>
+                <span>📅 2008</span>
+            </div>
+            <div class="pre-play-episodes" id="preEpisodes" style="display:none;"></div>
+            <button id="prePlayBtn" class="pre-play-btn">
+                <svg viewBox="0 0 24 24" width="48" height="48">
+                    <polygon points="5,3 19,12 5,21" fill="#fff" />
+                </svg>
+                <span>Play Now</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- VIDEO -->
+    <video id="mainVideo" playsinline preload="metadata">
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <!-- GLOW -->
+    <div class="ambient-glow"></div>
+
+    <!-- PAUSE OVERLAY -->
+    <div id="pauseOverlay" class="pause-overlay hidden">
+        <div class="pause-glass">
+            <button id="prevEpisodeBtn" class="pause-nav-btn" title="Previous">
+                <svg viewBox="0 0 24 24" width="28" height="28">
+                    <polygon points="2,12 12,5 12,19" fill="white" />
+                    <polygon points="12,12 22,5 22,19" fill="white" />
+                </svg>
+            </button>
+            <button id="pausePlayBtn" class="pause-play-btn">
+                <svg viewBox="0 0 24 24" width="48" height="48">
+                    <polygon points="5,3 19,12 5,21" fill="#fff" />
+                </svg>
+            </button>
+            <button id="nextEpisodeBtn" class="pause-nav-btn" title="Next">
+                <svg viewBox="0 0 24 24" width="28" height="28">
+                    <polygon points="22,12 12,5 12,19" fill="white" />
+                    <polygon points="12,12 2,5 2,19" fill="white" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- NEXT VIDEO POPUP -->
+    <div id="nextVideoPopup" class="next-episode-popup hidden">
+        <div class="next-episode-content">
+            <span class="next-episode-label">Up Next</span>
+            <span class="next-episode-title" id="nextVideoTitle">Next Video</span>
+            <div class="next-episode-timer">
+                <div id="nextVideoProgress" class="next-episode-progress"></div>
+            </div>
+            <button id="skipNextBtn" class="skip-next-btn">Skip ▶</button>
+        </div>
+    </div>
+
+    <!-- GLASS CONTROLS -->
+    <div id="controls" class="glass-controls">
+        <div class="progress-container">
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+                <div id="progressHandle" class="progress-handle"></div>
+            </div>
+        </div>
+        <div class="controls-row">
+            <div class="controls-left">
+                <button id="playPauseBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <polygon id="playIcon" points="5,3 19,12 5,21" fill="white" />
+                        <rect id="pauseIcon" x="6" y="4" width="4" height="16" fill="white" style="display:none;" />
+                        <rect id="pauseIcon2" x="14" y="4" width="4" height="16" fill="white" style="display:none;" />
+                    </svg>
+                </button>
+                <button id="backBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <polygon points="2,12 12,5 12,19" fill="white" />
+                        <polygon points="12,12 22,5 22,19" fill="white" />
+                    </svg>
+                </button>
+                <button id="nextBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <polygon points="22,12 12,5 12,19" fill="white" />
+                        <polygon points="12,12 2,5 2,19" fill="white" />
+                    </svg>
+                </button>
+                <button id="loopBtn" class="ctrl-btn loop-btn" title="Loop">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M4 12C4 8 8 6 12 6C16 6 20 8 20 12" stroke="white" stroke-width="2" fill="none" />
+                        <path d="M8 15L4 12L8 9" stroke="white" stroke-width="2" fill="none" />
+                        <path d="M20 12C20 16 16 18 12 18C8 18 4 16 4 12" stroke="white" stroke-width="2" fill="none" />
+                        <path d="M16 9L20 12L16 15" stroke="white" stroke-width="2" fill="none" />
+                    </svg>
+                </button>
+                <button id="ccBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="white" stroke-width="1.5" />
+                        <text x="6" y="15" font-size="10" fill="white" font-weight="bold">CC</text>
+                    </svg>
+                </button>
+                <div class="volume-group">
+                    <button id="volumeBtn" class="ctrl-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <polygon points="3,9 9,9 14,5 14,19 9,15 3,15" fill="white" />
+                            <path id="volumeHigh" d="M19 8 L21 10 L19 12 L21 14 L19 16" stroke="white" stroke-width="2" fill="none" />
+                            <path id="volumeLow" d="M16 8 L18 10 L16 12" stroke="white" stroke-width="2" fill="none" style="display:none;" />
+                            <path id="volumeMute" d="M19 8 L21 10 L19 12 L21 14 L19 16 M21 8 L19 10 L21 12 L19 14 L21 16" stroke="white" stroke-width="2" fill="none" style="display:none;" />
+                        </svg>
+                    </button>
+                    <div class="volume-wrapper">
+                        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" class="volume-slider" />
+                    </div>
+                </div>
+                <span id="timeDisplay" class="time-display">00:00 / 00:00</span>
+            </div>
+            <div class="controls-right">
+                <button id="fullscreenBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <polygon points="3,3 8,3 8,5 5,5 5,8 3,8" fill="white" />
+                        <polygon points="21,3 16,3 16,5 19,5 19,8 21,8" fill="white" />
+                        <polygon points="3,21 8,21 8,19 5,19 5,16 3,16" fill="white" />
+                        <polygon points="21,21 16,21 16,19 19,19 19,16 21,16" fill="white" />
+                    </svg>
+                </button>
+                <button id="settingsBtn" class="ctrl-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <circle cx="12" cy="12" r="3" fill="white" />
+                        <path d="M12 1L12 4M12 20L12 23M4 12L1 12M23 12L20 12M6 6L4 4M18 18L20 20M18 6L20 4M6 18L4 20" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsDropdown" class="settings-dropdown hidden">
+        <div class="settings-header">
+            <span class="settings-title">⚙️ Settings</span>
+            <button id="closeSettings" class="settings-close">✕</button>
+        </div>
+        <div class="settings-tabs">
+            <button class="settings-tab active" data-tab="video">Video</button>
+            <button class="settings-tab" data-tab="subs">Subtitles</button>
+            <button class="settings-tab" data-tab="servers">Servers</button>
+        </div>
+        <div class="settings-content" id="tab-video">
+            <div class="settings-section">
+                <div class="settings-label">Speed</div>
+                <div class="settings-options" id="speedOptions">
+                    <button class="settings-option" data-value="0.5">0.5x</button>
+                    <button class="settings-option active" data-value="1">1x</button>
+                    <button class="settings-option" data-value="1.5">1.5x</button>
+                    <button class="settings-option" data-value="2">2x</button>
+                </div>
+            </div>
+        </div>
+        <div class="settings-content hidden" id="tab-subs">
+            <div class="settings-section">
+                <div class="settings-label">Language</div>
+                <div class="settings-options" id="subtitleOptions">
+                    <button class="settings-option active" data-value="off">Off</button>
+                    <button class="settings-option" data-value="en">English</button>
+                    <button class="settings-option" data-value="si">සිංහල (Sinhala)</button>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">Upload Subtitle</div>
+                <div class="settings-options">
+                    <label class="settings-option upload-btn" style="cursor:pointer;border-color:rgba(229,9,14,.3);">
+                        📁 Upload .srt/.vtt
+                        <input type="file" id="subUploadInput" accept=".srt,.vtt" style="display:none;" />
+                    </label>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">Subtitle Size</div>
+                <div class="settings-options" id="subSizeOptions">
+                    <button class="settings-option" data-value="small">S</button>
+                    <button class="settings-option active" data-value="medium">M</button>
+                    <button class="settings-option" data-value="large">L</button>
+                    <button class="settings-option" data-value="xl">XL</button>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">Subtitle Color</div>
+                <div class="settings-options color-options" id="subColorOptions">
+                    <button class="settings-option color-btn active" data-value="#ffffff" style="background:#ffffff;"></button>
+                    <button class="settings-option color-btn" data-value="#ffff00" style="background:#ffff00;"></button>
+                    <button class="settings-option color-btn" data-value="#ff6b6b" style="background:#ff6b6b;"></button>
+                    <button class="settings-option color-btn" data-value="#4ecdc4" style="background:#4ecdc4;"></button>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">Subtitle Background</div>
+                <div class="settings-options" id="subBgOptions">
+                    <button class="settings-option active" data-value="dark">Dark</button>
+                    <button class="settings-option" data-value="light">Light</button>
+                    <button class="settings-option" data-value="none">None</button>
+                </div>
+            </div>
+        </div>
+        <div class="settings-content hidden" id="tab-servers">
+            <div class="settings-section">
+                <div class="settings-label">Stream Server</div>
+                <div class="settings-options" id="serverOptions">
+                    <button class="settings-option active" data-value="auto">Auto</button>
+                    <button class="settings-option" data-value="server1">Server 1</button>
+                    <button class="settings-option" data-value="server2">Server 2</button>
+                    <button class="settings-option" data-value="server3">Server 3</button>
+                </div>
+            </div>
+            <div class="settings-section" style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.04);">
+                <div class="settings-label" style="color:rgba(255,255,255,.15);">Status</div>
+                <div style="font-size:10px;color:#4ade80;font-weight:600;" id="serverStatus">🟢 Connected</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUBTITLES -->
+    <div id="subtitleOverlay" class="subtitle-overlay hidden">
+        <div id="subtitleText" class="subtitle-text"></div>
+    </div>
+
+    <!-- WATERMARK -->
+    <div class="player-watermark">FLEX <span>TV</span></div>
+</div>
+
+<script src="playertest.js"></script>
+</body>
+</html>
